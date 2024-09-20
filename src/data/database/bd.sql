@@ -19,8 +19,8 @@ USE `projeto_ong` ;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `projeto_ong`.`States` (
   `idState` INT NOT NULL AUTO_INCREMENT,
-  `nameState` VARCHAR(50) NULL,
-  `UF` CHAR(2) NULL,
+  `nameState` VARCHAR(50) NOT NULL,
+  `UF` CHAR(2) NOT NULL,
   PRIMARY KEY (`idState`))
 ENGINE = InnoDB;
 
@@ -30,7 +30,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `projeto_ong`.`Cities` (
   `idCity` INT NOT NULL AUTO_INCREMENT,
-  `nameCity` VARCHAR(100) NULL,
+  `nameCity` VARCHAR(100) NOT NULL,
   `States_idState` INT NOT NULL,
   PRIMARY KEY (`idCity`),
   INDEX `fk_Cities_States1_idx` (`States_idState` ASC) VISIBLE,
@@ -47,10 +47,10 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `projeto_ong`.`Addresses` (
   `idAddress` INT NOT NULL AUTO_INCREMENT,
-  `publicPlace` VARCHAR(100) NULL,
-  `neigborhood` VARCHAR(50) NULL,
-  `number` VARCHAR(10) NULL,
-  `complement` VARCHAR(50) NULL,
+  `publicPlace` VARCHAR(100) NOT NULL,
+  `neighborhood` VARCHAR(50) NOT NULL,
+  `number` VARCHAR(10) NOT NULL,
+  `complement` VARCHAR(100) NULL,
   `States_idState` INT NOT NULL,
   `Cities_idCity` INT NOT NULL,
   PRIMARY KEY (`idAddress`),
@@ -74,12 +74,12 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `projeto_ong`.`Employees` (
   `idEmployee` INT NOT NULL AUTO_INCREMENT,
-  `nameEmployee` VARCHAR(50) NULL,
-  `email` VARCHAR(100) NULL,
+  `nameEmployee` VARCHAR(50) NOT NULL,
+  `email` VARCHAR(100) NOT NULL,
   `cellPhoneNumber` CHAR(11) NULL,
-  `passwordHash` VARCHAR(255) NULL,
+  `passwordHash` VARCHAR(255) NOT NULL,
   `validationToken` VARCHAR(255) NULL,
-  `verificationCode` VARCHAR(255) NULL,
+  `code` CHAR(6) NULL,
   `position` VARCHAR(50) NULL,
   `Addresses_idAddress` INT NULL,
   PRIMARY KEY (`idEmployee`),
@@ -97,7 +97,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `projeto_ong`.`Users` (
   `idUser` INT NOT NULL AUTO_INCREMENT,
-  `nameUser` VARCHAR(50) NULL,
+  `nameUser` VARCHAR(50) NOT NULL,
   `cellPhoneNumber` CHAR(11) NULL,
   `email` VARCHAR(100) NULL,
   `Addresses_idAddress` INT NULL,
@@ -116,7 +116,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `projeto_ong`.`DonationCategories` (
   `idDonationCategory` INT NOT NULL AUTO_INCREMENT,
-  `nameDonationCategory` VARCHAR(50) NULL,
+  `nameDonationCategory` VARCHAR(50) NOT NULL,
   PRIMARY KEY (`idDonationCategory`))
 ENGINE = InnoDB;
 
@@ -126,7 +126,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `projeto_ong`.`SupplementCategories` (
   `idSupplementCategory` INT NOT NULL AUTO_INCREMENT,
-  `nameSupplementCategory` VARCHAR(50) NULL,
+  `nameSupplementCategory` VARCHAR(50) NOT NULL,
   PRIMARY KEY (`idSupplementCategory`))
 ENGINE = InnoDB;
 
@@ -136,9 +136,9 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `projeto_ong`.`Supplements` (
   `idSupplement` INT NOT NULL AUTO_INCREMENT,
-  `nameSupplement` VARCHAR(50) NULL,
-  `stock` FLOAT(10,2) NULL,
-  `typeMensure` CHAR(2) NULL,
+  `nameSupplement` VARCHAR(50) NOT NULL,
+  `stock` FLOAT NOT NULL,
+  `typeMensure` CHAR(2) NOT NULL,
   `SupplementCategories_idSupplementCategory` INT NOT NULL,
   PRIMARY KEY (`idSupplement`),
   INDEX `fk_Supplements_SupplementCategories1_idx` (`SupplementCategories_idSupplementCategory` ASC) VISIBLE,
@@ -156,8 +156,8 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `projeto_ong`.`SupplementInputs` (
   `idSupplementInput` INT NOT NULL AUTO_INCREMENT,
   `description` VARCHAR(100) NULL,
-  `amount` FLOAT(10,2) NULL,
-  `inputDate` DATETIME NULL,
+  `amount` FLOAT NOT NULL,
+  `inputDate` DATE NOT NULL,
   `Supplements_idSupplement` INT NOT NULL,
   PRIMARY KEY (`idSupplementInput`),
   INDEX `fk_InuputSupplement_Supplements1_idx` (`Supplements_idSupplement` ASC) VISIBLE,
@@ -174,9 +174,9 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `projeto_ong`.`Donations` (
   `idDonation` INT NOT NULL AUTO_INCREMENT,
-  `valueDonation` FLOAT(10,2) NULL,
+  `valueDonation` FLOAT NULL,
   `description` VARCHAR(100) NULL,
-  `donationDate` DATETIME NULL,
+  `donationDate` DATE NOT NULL,
   `Users_idUser` INT NULL,
   `DonationCategories_idDonationCategory` INT NOT NULL,
   `SupplementInputs_idSupplementInput` INT NULL,
@@ -207,7 +207,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `projeto_ong`.`Species` (
   `idSpecies` INT NOT NULL AUTO_INCREMENT,
-  `nameSpecies` VARCHAR(50) NULL,
+  `nameSpecies` VARCHAR(50) NOT NULL,
   PRIMARY KEY (`idSpecies`))
 ENGINE = InnoDB;
 
@@ -217,7 +217,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `projeto_ong`.`Races` (
   `idRace` INT NOT NULL AUTO_INCREMENT,
-  `nameRace` VARCHAR(50) NULL,
+  `nameRace` VARCHAR(50) NOT NULL,
   PRIMARY KEY (`idRace`))
 ENGINE = InnoDB;
 
@@ -228,8 +228,8 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `projeto_ong`.`Animals` (
   `idAnimal` INT NOT NULL AUTO_INCREMENT,
   `nameAnimal` VARCHAR(50) NULL,
-  `size` VARCHAR(50) NULL,
-  `status` VARCHAR(50) NULL,
+  `size` VARCHAR(50) NOT NULL,
+  `statusAnimal` VARCHAR(50) NOT NULL,
   `description` VARCHAR(255) NULL,
   `Species_idSpecies` INT NOT NULL,
   `Races_idRace` INT NOT NULL,
@@ -254,8 +254,8 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `projeto_ong`.`Adoptions` (
   `idAdoption` INT NOT NULL AUTO_INCREMENT,
-  `dateAdoption` DATE NULL,
-  `statusAdoption` VARCHAR(50) NULL,
+  `dateAdoption` DATE NOT NULL,
+  `statusAdoption` VARCHAR(50) NOT NULL,
   `Animals_idAnimal` INT NOT NULL,
   `Users_idUser` INT NOT NULL,
   PRIMARY KEY (`idAdoption`),
@@ -279,9 +279,9 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `projeto_ong`.`ClinicalReports` (
   `idClinicalReport` INT NOT NULL AUTO_INCREMENT,
-  `registrationDate` DATE NULL,
+  `registrationDate` DATE NOT NULL,
   `editionDate` DATE NULL,
-  `clinicalReport` VARCHAR(255) NULL,
+  `descriptionClinicalReport` VARCHAR(255) NOT NULL,
   `Animals_idAnimal` INT NOT NULL,
   `Employees_idEmployee` INT NOT NULL,
   PRIMARY KEY (`idClinicalReport`),
@@ -305,7 +305,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `projeto_ong`.`ExpenseCategories` (
   `idExpenseCategory` INT NOT NULL AUTO_INCREMENT,
-  `nameExpenseCategory` VARCHAR(50) NULL,
+  `nameExpenseCategory` VARCHAR(50) NOT NULL,
   PRIMARY KEY (`idExpenseCategory`))
 ENGINE = InnoDB;
 
@@ -315,11 +315,12 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `projeto_ong`.`Expenses` (
   `idExpense` INT NOT NULL AUTO_INCREMENT,
-  `valueExpense` FLOAT(10,2) NULL,
+  `valueExpense` FLOAT NOT NULL,
   `description` VARCHAR(100) NULL,
-  `registrationDate` DATE NULL,
+  `registrationDate` DATE NOT NULL,
   `paymentDate` DATE NULL,
-  `dueDate` DATE NULL,
+  `dueDate` DATE NOT NULL,
+  `statusExpense` VARCHAR(50) NOT NULL,
   `ExpenseCategories_idExpenseCategory` INT NOT NULL,
   PRIMARY KEY (`idExpense`),
   INDEX `fk_Expeses_ExpeseCategories1_idx` (`ExpenseCategories_idExpenseCategory` ASC) VISIBLE,
@@ -332,65 +333,13 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `projeto_ong`.`MedicalPrescriptions`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `projeto_ong`.`MedicalPrescriptions` (
-  `idMedicalPrescription` INT NOT NULL,
-  `registrationDate` DATETIME NULL,
-  `editionDate` DATETIME NULL,
-  `description` VARCHAR(100) NULL,
-  `Animals_idAnimal` INT NOT NULL,
-  `Employees_idEmployee` INT NOT NULL,
-  PRIMARY KEY (`idMedicalPrescription`),
-  INDEX `fk_MedicalPrescription_Animals1_idx` (`Animals_idAnimal` ASC) VISIBLE,
-  INDEX `fk_MedicalPrescription_Employees1_idx` (`Employees_idEmployee` ASC) VISIBLE,
-  CONSTRAINT `fk_MedicalPrescription_Animals1`
-    FOREIGN KEY (`Animals_idAnimal`)
-    REFERENCES `projeto_ong`.`Animals` (`idAnimal`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_MedicalPrescription_Employees1`
-    FOREIGN KEY (`Employees_idEmployee`)
-    REFERENCES `projeto_ong`.`Employees` (`idEmployee`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
--- Table `projeto_ong`.`MedicationDosages`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `projeto_ong`.`MedicationDosages` (
-  `idMedicationDosages` INT NOT NULL AUTO_INCREMENT,
-  `dosage` FLOAT(10,2) NULL,
-  `time` CHAR(5) NULL,
-  `observations` VARCHAR(100) NULL,
-  `MedicalPrescriptions_idMedicalPrescription` INT NOT NULL,
-  `Supplements_idSupplement` INT NOT NULL,
-  INDEX `fk_MedicationDosages_MedicalPrescriptions1_idx` (`MedicalPrescriptions_idMedicalPrescription` ASC) VISIBLE,
-  INDEX `fk_MedicationDosages_Supplements1_idx` (`Supplements_idSupplement` ASC) VISIBLE,
-  PRIMARY KEY (`idMedicationDosages`),
-  CONSTRAINT `fk_MedicationDosages_MedicalPrescriptions1`
-    FOREIGN KEY (`MedicalPrescriptions_idMedicalPrescription`)
-    REFERENCES `projeto_ong`.`MedicalPrescriptions` (`idMedicalPrescription`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_MedicationDosages_Supplements1`
-    FOREIGN KEY (`Supplements_idSupplement`)
-    REFERENCES `projeto_ong`.`Supplements` (`idSupplement`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
 -- Table `projeto_ong`.`SupplementOutputs`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `projeto_ong`.`SupplementOutputs` (
   `idSupplementOutput` INT NOT NULL AUTO_INCREMENT,
   `description` VARCHAR(100) NULL,
-  `amount` FLOAT(10,2) NULL,
-  `outputDate` DATETIME NULL,
+  `amount` FLOAT NOT NULL,
+  `outputDate` DATE NOT NULL,
   `Supplements_idSupplement` INT NOT NULL,
   PRIMARY KEY (`idSupplementOutput`),
   INDEX `fk_OutputSupplements_Supplements1_idx` (`Supplements_idSupplement` ASC) VISIBLE,

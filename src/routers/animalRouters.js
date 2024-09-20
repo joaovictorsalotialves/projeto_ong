@@ -4,6 +4,7 @@ import { deleteAnimalController } from "../controllers/AnimalControllers/deleteA
 import { insertAnimalController } from "../controllers/AnimalControllers/insertAnimalController.js";
 import { selectAnimalController } from "../controllers/AnimalControllers/selectAnimalController.js";
 import { selectAnimalsController } from "../controllers/AnimalControllers/selectAnimalsController.js";
+import { selectClinicalReportForAnimalController } from "../controllers/AnimalControllers/selectClinicalReportForAnimalController.js";
 import { updateAnimalController } from "../controllers/AnimalControllers/updateAnimalController.js";
 import { updateAnimalStatusController } from "../controllers/AnimalControllers/updateAnimalStatusController.js";
 
@@ -17,5 +18,6 @@ animalRouters.patch('/:idAnimal', updateAnimalStatusController);
 
 animalRouters.get('/', selectAnimalsController);
 animalRouters.get('/:idAnimal', selectAnimalController);
+animalRouters.get('/:idAnimal/clinical-report', selectClinicalReportForAnimalController);
 
 animalRouters.delete('/:idAnimal', deleteAnimalController);

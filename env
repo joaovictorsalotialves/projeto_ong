@@ -1,0 +1,15 @@
+SERVER_PORT = 4040
+
+DB_PORT = 3306
+DB_HOST = 'localhost'
+DB_USER = 'root'
+DB_PASSWORD = 'root'
+DB_NAME = 'projeto_ong'
+
+JWT_SECRET = ''
+SESSION_SECRET = ''
+
+SERVER_SMTP_HOST = 'smtp.gmail.com'
+SERVER_SMTP_PORT = 587
+SERVER_SMTP_USER = ''  
+SERVER_SMTP_PASSWORD = ''

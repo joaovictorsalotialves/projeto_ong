@@ -2,16 +2,15 @@ import { conn } from "../../data/connection.js";
 
 export const findAll = async (nameAnimal, statusAnimal, size, nameSpecies, nameRace) => {
   try {
-    let animals = await conn
-      .select([
-        'animals.idAnimal',
-        'animals.nameAnimal',
-        'animals.size',
-        'animals.statusAnimal',
-        'animals.description',
-        'species.nameSpecies',
-        'races.nameRace'
-      ]).from('animals')
+    let animals = await conn.select([
+      'animals.idAnimal',
+      'animals.nameAnimal',
+      'animals.size',
+      'animals.statusAnimal',
+      'animals.description',
+      'species.nameSpecies',
+      'races.nameRace'
+    ]).from('animals')
       .join('species', 'animals.Species_idSpecies', '=', 'species.idSpecies')
       .join('races', 'animals.Races_idRace', '=', 'races.idRace')
       .where(function () {

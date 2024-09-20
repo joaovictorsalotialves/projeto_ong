@@ -8,9 +8,8 @@ export const findAll = async (nameUser) => {
       'cellPhoneNumber',
       'email'
     ]).where(function () {
-      if(nameUser) this.whereRaw("`nameUser` LIKE ? COLLATE utf8mb4_general_ci", [`%${nameUser}%`])
-    }).orderBy([{ column: 'nameUser', order: 'asc' }])
-    .table('users');
+      if (nameUser) this.whereRaw("`nameUser` LIKE ? COLLATE utf8mb4_general_ci", [`%${nameUser}%`])
+    }).orderBy([{ column: 'nameUser', order: 'asc' }]).table('users');
     return { status: true, values: users };
   } catch (error) {
     return { status: false, error: error };

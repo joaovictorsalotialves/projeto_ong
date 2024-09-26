@@ -1,5 +1,6 @@
 import express from "express";
 
+import { Auth } from "../middlewares/Auth.js";
 import { authResetPassword } from "../middlewares/AuthResetPassword.js";
 
 import { forgotPasswordController } from "../controllers/EmployeeControllers/forgotPasswordController.js";
@@ -17,18 +18,20 @@ import { updateEmployeePasswordController } from "../controllers/EmployeeControl
 
 export const employeeRouters = express.Router();
 
+const auth = new Auth();
+
 employeeRouters.post('/login', loginController);
 employeeRouters.post('/forgot-password', forgotPasswordController);
 employeeRouters.post('/reset-password', authResetPassword, resetPasswordController);
 employeeRouters.post('/logout/:idEmployee', logoutController);
 
-employeeRouters.post('/', insertEmployeeController);
+employeeRouters.post('/', auth.authAdmin, insertEmployeeController);
 
-employeeRouters.put('/:idEmployee', updateEmployeeController);
-employeeRouters.patch('/:idEmployee/password', updateEmployeePasswordController);
+employeeRouters.put('/:idEmployee', auth.authAdmin, updateEmployeeController);
+employeeRouters.patch('/:idEmployee/password', auth.authEmployee, updateEmployeePasswordController);
 
-employeeRouters.get('/', selectEmployeesController);
-employeeRouters.get('/:idEmployee', selectEmployeeController);
+employeeRouters.get('/', auth.authEmployee, selectEmployeesController);
+employeeRouters.get('/:idEmployee', auth.authEmployee, selectEmployeeController);
 
-employeeRouters.delete('/:idEmployee', deleteEmployeeController);
-employeeRouters.delete('/:idEmployee/address', deleteEmployeeAddressController);
+employeeRouters.delete('/:idEmployee', auth.authAdmin, deleteEmployeeController);
+employeeRouters.delete('/:idEmployee/address', auth.authAdmin, deleteEmployeeAddressController);

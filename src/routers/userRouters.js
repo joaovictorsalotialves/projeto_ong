@@ -1,5 +1,7 @@
 import express from "express";
 
+import { Auth } from "../middlewares/Auth.js";
+
 import { deleteUserAddressController } from "../controllers/UserControllers/deleteUserAddressController.js";
 import { deleteUserController } from "../controllers/UserControllers/deleteUserController.js";
 import { insertUserController } from "../controllers/UserControllers/insertUserController.js";
@@ -11,14 +13,16 @@ import { updateUserController } from "../controllers/UserControllers/updateUserC
 
 export const userRouters = express.Router();
 
-userRouters.post('/', insertUserController);
+const auth = new Auth();
 
-userRouters.put('/:idUser', updateUserController);
+userRouters.post('/', auth.authEmployee, insertUserController);
 
-userRouters.get('/', selectUsersController);
-userRouters.get('/:idUser', selectUserController);
+userRouters.put('/:idUser', auth.authEmployee, updateUserController);
+
+userRouters.get('/', auth.authEmployee, selectUsersController);
+userRouters.get('/:idUser', auth.authEmployee, selectUserController);
 userRouters.get('/:idUser/donation', selectDonationForUserController);
 userRouters.get('/:idUser/adoption', selectAdoptionForUserController);
 
-userRouters.delete('/:idUser', deleteUserController);
-userRouters.delete('/:idUser/address', deleteUserAddressController);
+userRouters.delete('/:idUser', auth.authEmployee, deleteUserController);
+userRouters.delete('/:idUser/address', auth.authEmployee, deleteUserAddressController);

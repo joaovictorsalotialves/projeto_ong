@@ -24,15 +24,15 @@ export const edit = async (idDonation, valueDonation, description, donationDate,
 
         if (resultSupplementInput.status) {
           try {
-            await conn.insert({
+            await conn.update({
               valueDonation: valueDonation,
               description: description,
               donationDate: donationDate,
               Users_idUser: idUser,
               DonationCategories_idDonationCategory: idDonationCategory,
               SupplementInputs_idSupplementInput: resultSupplementInput.id
-            }).table('donations').returning(['idDonation']);
-            return { status: true, id: idDonation[0] };
+            }).where({ idDonation: idDonation }).table('donations');
+            return { status: true };
           } catch (error) {
             return { status: false, error: error };
           }
@@ -42,14 +42,14 @@ export const edit = async (idDonation, valueDonation, description, donationDate,
       }
 
       try {
-        await conn.insert({
+        await conn.update({
           valueDonation: valueDonation,
           description: description,
           donationDate: donationDate,
           Users_idUser: idUser,
           DonationCategories_idDonationCategory: idDonationCategory
-        }).table('donations').returning(['idDonation']);
-        return { status: true, id: idDonation[0] };
+        }).where({ idDonation: idDonation }).table('donations');
+        return { status: true };
       } catch (error) {
         return { status: false, error: error };
       }

@@ -17,6 +17,7 @@ export const editPayment = async (idExpense, paymentDate) => {
       }).where({ idExpense: idExpense }).table('expenses');
       return { status: true };
     } catch (error) {
+      console.log(error)
       return { status: false, error: error };
     }
   }

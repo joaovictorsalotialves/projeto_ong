@@ -8,7 +8,7 @@ export const selectAdoptionController = async (request, response) => {
   let adoption = await findById(idAdoption);
 
   return adoption.status
-    ? response.status(200).json({ success: true, values: adoption.values })
+    ? response.status(200).json({ success: true, values: [adoption.values] })
     : adoption.status === undefined
       ? response.status(404).json({ success: false, message: 'Adoption not found' })
       : response.status(500).json({ success: false, message: 'Failed to fetch adoption', error: adoption.error });

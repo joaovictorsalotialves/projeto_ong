@@ -27,8 +27,8 @@ export const updateDonationController = async (request, response) => {
   let result = await edit(idDonation, valueDonation, description, donationDate, idUser, idDonationCategory, supplementInput);
 
   return result.status
-    ? response.status(200).json({ sucess: true, id: result.id, message: 'Donation successfully registered' })
+    ? response.status(200).json({ sucess: true, id: result.id, message: 'Donation updated successfully' })
     : result.error
-      ? response.status(500).json({ sucess: false, message: 'Failed to registered donation', error: result.error })
+      ? response.status(500).json({ sucess: false, message: 'Failed to updated donation', error: result.error })
       : response.status(400).json({ sucess: false, message: result.message });
 }

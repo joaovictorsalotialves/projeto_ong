@@ -8,7 +8,7 @@ export const selectDonationController = async (request, response) => {
   let donation = await findById(idDonation);
 
   return donation.status
-    ? response.status(200).json({ sucess: true, values: donation.values })
+    ? response.status(200).json({ sucess: true, values: [donation.values] })
     : donation.status === undefined
       ? response.status(404).json({ sucess: false, message: 'Donation not found' })
       : response.status(500).json({ sucess: false, message: 'Failed to fetch donation', error: donation.error });

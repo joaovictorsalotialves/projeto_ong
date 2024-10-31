@@ -8,8 +8,8 @@ export const deleteUserAddressController = async (request, response) => {
   let result = await removeAddress(idUser);
 
   return result.status
-    ? response.status(200).json({ sucess: true, message: 'User deleted successfully' })
+    ? response.status(200).json({ sucess: true, message: 'Address user deleted successfully' })
     : result.error
-      ? response.status(500).json({ sucess: false, message: 'Failed to deleted user', error: result.error })
+      ? response.status(500).json({ sucess: false, message: 'Failed to deleted address user', error: result.error })
       : response.status(400).json({ sucess: false, message: result.message });
 }

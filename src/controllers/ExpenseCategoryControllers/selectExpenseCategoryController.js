@@ -8,7 +8,7 @@ export const selectExpenseCategoryController = async (request, response) => {
   let expenseCategory = await findById(idExpenseCategory);
 
   return expenseCategory.status
-    ? response.status(200).json({ sucess: true, values: expenseCategory.values })
+    ? response.status(200).json({ sucess: true, values: [expenseCategory.values] })
     : expenseCategory.status === undefined
       ? response.status(404).json({ sucess: false, message: 'Expense category not found' })
       : response.status(500).json({ sucess: false, message: 'Failed to fetch expense category', error: expenseCategory.error });

@@ -6,7 +6,7 @@ export const findById = async (idAddress) => {
       .select([
         'addresses.idAddress',
         'addresses.publicPlace',
-        'addresses.neigborhood',
+        'addresses.neighborhood',
         'addresses.number',
         'addresses.complement',
         'states.nameState',

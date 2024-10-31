@@ -1,6 +1,7 @@
 import dotenv from 'dotenv';
 dotenv.config();
 
+import cors from "cors";
 import express from "express";
 import session from "express-session";
 
@@ -37,6 +38,8 @@ const auth = new Auth;
 api.use(express.urlencoded({ extended: false }));
 api.use(express.json());
 
+api.use(cors());
+
 api.use(session({
   secret: process.env.SESSION_SECRET,
   resave: false,
@@ -44,26 +47,51 @@ api.use(session({
   cookie: { secure: false }
 }));
 
-api.use('/city', auth.authEmployee, cityRouters);
-api.use('/state', auth.authEmployee, stateRouters);
+// api.use('/city', auth.authEmployee, cityRouters);
+// api.use('/state', auth.authEmployee, stateRouters);
+
+// api.use('/user', userRouters);
+// api.use('/employee', employeeRouters);
+
+// api.use('/donation-category', auth.authEmployee, donationCategoryRouters);
+// api.use('/donation', auth.authEmployee, donationRouters);
+
+// api.use('/expense-category', auth.authEmployee, expenseCategoryRouters);
+// api.use('/expense', auth.authEmployee, expenseRouters);
+
+// api.use('/animal', auth.authEmployee, animalRouters);
+// api.use('/race', auth.authEmployee, raceRouters);
+// api.use('/species', auth.authEmployee, speciesRouters);
+
+// api.use('/adoption', auth.authEmployee, adoptionRouters);
+// api.use('/clinical-report', auth.authEmployee, clinicalReportRouters);
+
+// api.use('/supplement-category', auth.authEmployee, supplementCategoryRouters);
+// api.use('/supplement-input', auth.authEmployee, supplementInputRouters);
+// api.use('/supplement-output', auth.authEmployee, supplementOutputRouters);
+// api.use('/supplement', auth.authEmployee, supplementRouters);
+
+
+api.use('/city', cityRouters);
+api.use('/state', stateRouters);
 
 api.use('/user', userRouters);
 api.use('/employee', employeeRouters);
 
-api.use('/donation-category', auth.authEmployee, donationCategoryRouters);
-api.use('/donation', auth.authEmployee, donationRouters);
+api.use('/donation-category', donationCategoryRouters);
+api.use('/donation', donationRouters);
 
-api.use('/expense-category', auth.authEmployee, expenseCategoryRouters);
-api.use('/expense', auth.authEmployee, expenseRouters);
+api.use('/expense-category', expenseCategoryRouters);
+api.use('/expense', expenseRouters);
 
-api.use('/animal', auth.authEmployee, animalRouters);
-api.use('/race', auth.authEmployee, raceRouters);
-api.use('/species', auth.authEmployee, speciesRouters);
+api.use('/animal', animalRouters);
+api.use('/race', raceRouters);
+api.use('/species', speciesRouters);
 
-api.use('/adoption', auth.authEmployee, adoptionRouters);
-api.use('/clinical-report', auth.authEmployee, clinicalReportRouters);
+api.use('/adoption', adoptionRouters);
+api.use('/clinical-report', clinicalReportRouters);
 
-api.use('/supplement-category', auth.authEmployee, supplementCategoryRouters);
-api.use('/supplement-input', auth.authEmployee, supplementInputRouters);
-api.use('/supplement-output', auth.authEmployee, supplementOutputRouters);
-api.use('/supplement', auth.authEmployee, supplementRouters);
+api.use('/supplement-category', supplementCategoryRouters);
+api.use('/supplement-input', supplementInputRouters);
+api.use('/supplement-output', supplementOutputRouters);
+api.use('/supplement', supplementRouters);

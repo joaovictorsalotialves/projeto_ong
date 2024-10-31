@@ -8,7 +8,7 @@ export const create = async (dateAdoption, idAnimal, idUser) => {
   let user = await UserFindById(idUser);
 
   if (animal.status && user.status) {
-    if (animal.values.statusAnimal == 'ADOPTION') return {
+    if (animal.values.statusAnimal == 'ADOPTED') return {
       status: false,
       message: 'Animal has already been adopted'
     }

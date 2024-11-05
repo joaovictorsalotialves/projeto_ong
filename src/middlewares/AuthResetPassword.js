@@ -6,7 +6,7 @@ import jwt from "jsonwebtoken";
 export const authResetPassword = (request, response, next) => {
   const authToken = request.headers.authorization;
 
-  if (authToken === undefined) return response.status(403).json({ sucess: false, message: 'Unauthenticated' });
+  if (!authToken) return response.status(403).json({ sucess: false, message: 'Unauthenticated' });
 
   let bearer = authToken.split(' ');
   let token = bearer[1];
@@ -15,7 +15,7 @@ export const authResetPassword = (request, response, next) => {
     let decoded = jwt.verify(token, process.env.JWT_SECRET);
     let code = request.body.code;
 
-    if (decoded.authCode === code) {
+    if (decoded.authCode == code) {
       request.session.email = decoded.email;
       return next();
     }

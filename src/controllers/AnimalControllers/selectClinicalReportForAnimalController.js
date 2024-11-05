@@ -4,7 +4,7 @@ export const selectClinicalReportForAnimalController = async (request, response)
   let idAnimal = request.params.idAnimal;
   let { registrationDate } = request.query;
 
-  if (isNaN(idUser)) return response.status(404).json({ sucess: false, message: 'Incorrect parameter' });
+  if (isNaN(idAnimal)) return response.status(404).json({ sucess: false, message: 'Incorrect parameter' });
 
   let clinicalReports = await findClinicalReportForAnimal(idAnimal, registrationDate);
 

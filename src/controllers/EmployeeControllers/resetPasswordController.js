@@ -22,17 +22,11 @@ export const resetPasswordController = async (request, response) => {
 
     let result = await resetPassword(code, email, newPassword);
 
-    if (result.status) {
-      request.session.destroy((error) => {
-        if (error) return response.status(500).json({ sucess: false, message: 'Failed to end session', error: error });
-        response.clearCookie('connect.sid');
-      });
-      return response.status(200).json({ sucess: true, message: 'Successful password reset' })
-    }
-
-    return result.error
-      ? response.status(500).json({ sucess: false, message: 'Failed to reset password', error: result.error })
-      : response.status(400).json({ sucess: false, message: result.message });
+    return result.status
+      ? response.status(200).json({ sucess: true, message: 'Successful password reset' })
+      : result.error
+        ? response.status(500).json({ sucess: false, message: 'Failed to reset password', error: result.error })
+        : response.status(400).json({ sucess: false, message: result.message });
   }
 
   response.status(500).json({ sucess: false, message: 'Failed to session reset password' })

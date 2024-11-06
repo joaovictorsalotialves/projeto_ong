@@ -1,8 +1,6 @@
 import bcrypt from "bcryptjs";
 
 import { conn } from "../../data/connection.js";
-
-import { editAuthCode } from "./editAuthCode.js";
 import { findByEmail } from "./findByEmail.js";
 
 export const resetPassword = async (code, emailEmployee, newPassword) => {
@@ -20,10 +18,10 @@ export const resetPassword = async (code, emailEmployee, newPassword) => {
     let hash = bcrypt.hashSync(newPassword, salt);
 
     try {
-      await conn.update({
+      const result = await conn.update({
         passwordHash: hash,
       }).where({ idEmployee: employee.values.idEmployee }).table('employees');
-      await editAuthCode(employee.values.idEmployee, null, null);
+      if (result.status) await editAuthCode(employee.values.idEmployee, null, null);
       return { status: true };
     } catch (error) {
       return {

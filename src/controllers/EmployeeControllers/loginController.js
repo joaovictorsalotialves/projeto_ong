@@ -24,10 +24,10 @@ export const loginController = async (request, response) => {
         : response.status(500).json({ sucess: false, message: 'Failed to save token', error: result.error });
     }
 
-    return response.status(406).json({ sucess: false, message: 'Bad request: Incorrect password' });
+    return response.status(406).json({ sucess: false, message: 'Incorrect password' });
   }
 
   return employee.status === undefined
-    ? response.status(404).json({ sucess: false, message: 'Bad request: Employee not found' })
+    ? response.status(404).json({ sucess: false, message: 'Employee not found' })
     : response.status(500).json({ sucess: false, message: 'Failed to fetch employee', error: employee.error });
 }

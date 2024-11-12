@@ -1,7 +1,7 @@
 import { resetPassword } from "../../models/Employee/resetPassword.js";
 
 export const resetPasswordController = async (request, response) => {
-  const email = request.session.email;
+  const email = request.headers.email;
 
   if (email) {
     let { newPassword, passwordCheck, code } = request.body;

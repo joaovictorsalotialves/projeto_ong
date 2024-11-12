@@ -16,12 +16,13 @@ export const authResetPassword = (request, response, next) => {
     let code = request.body.code;
 
     if (decoded.authCode == code) {
-      request.session.email = decoded.email;
+      request.headers.email = decoded.email
       return next();
     }
 
     return response.status(403).json({ sucess: false, message: 'Invalid code!' });
   } catch (error) {
+    console.log(error)
     return response.status(500).json({ sucess: false, message: 'Unauthenticated', error: error });
   }
 }

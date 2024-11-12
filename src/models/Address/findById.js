@@ -9,8 +9,10 @@ export const findById = async (idAddress) => {
         'addresses.neighborhood',
         'addresses.number',
         'addresses.complement',
+        'states.idState',
         'states.nameState',
-        'cities.nameCity'
+        'cities.idCity',
+        'cities.nameCity',
       ]).from('addresses')
       .join('states', 'addresses.states_idState', '=', 'states.idState')
       .join('cities', 'addresses.cities_idCity', '=', 'cities.idCity')

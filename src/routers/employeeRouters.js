@@ -27,7 +27,7 @@ employeeRouters.post('/logout/:idEmployee', logoutController);
 
 employeeRouters.post('/', auth.authAdmin, insertEmployeeController);
 
-employeeRouters.put('/:idEmployee', auth.authAdmin, updateEmployeeController);
+employeeRouters.put('/:idEmployee', auth.authEmployee, updateEmployeeController);
 employeeRouters.patch('/:idEmployee/password', auth.authEmployee, updateEmployeePasswordController);
 
 employeeRouters.get('/', auth.authEmployee, selectEmployeesController);

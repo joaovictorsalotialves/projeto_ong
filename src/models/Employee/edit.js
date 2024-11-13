@@ -1,5 +1,8 @@
+import { conn } from "../../data/connection.js";
 import { create as AddressCreate } from "../Address/create.js";
 import { edit as AddressEdit } from "../Address/edit.js";
+import { findByEmail } from "./findByEmail.js";
+import { findById } from "./findById.js";
 
 export const edit = async (idEmployee, nameEmployee, cellPhoneNumber, email, position, address) => {
   let employee = await findById(idEmployee);

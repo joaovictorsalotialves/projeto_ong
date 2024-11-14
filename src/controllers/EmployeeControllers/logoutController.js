@@ -2,8 +2,11 @@ import { editAuthCode } from "../../models/Employee/editAuthCode.js";
 import { findById } from "../../models/Employee/findById.js";
 
 export const logoutController = async (request, response) => {
-  const { authToken } = request.body;
+  let authToken = request.headers.authorization;
   let idEmployee = request.params.idEmployee;
+
+  let bearer = authToken.split(' ');
+  let token = bearer[1];
 
   if (isNaN(idEmployee)) return response.status(404).json({ sucess: false, message: 'Incorrect parameter' });
 
@@ -13,11 +16,11 @@ export const logoutController = async (request, response) => {
     return response.status(404).json({ sucess: false, message: 'Bad request: Employee not found' });
   }
 
-  if (!authToken) {
+  if (!token) {
     return response.status(404).json({ sucess: false, message: 'Bad request: There is no open session' });
   }
 
-  if (authToken != employee.values.validationToken) {
+  if (token != employee.values.validationToken) {
     return response.status(404).json({ sucess: false, message: 'Bad request: This session does not belong to this employee' });
   }
 

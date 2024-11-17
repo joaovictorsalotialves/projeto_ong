@@ -3,7 +3,7 @@ import { findById as AnimalFindById } from "../Animal/findById.js";
 import { findById as UserFindById } from "../User/findById.js";
 import { findById } from "./findById.js";
 
-export const edit = async (idAdoption, idAnimal, idUser) => {
+export const edit = async (idAdoption, idAnimal, idUser, statusAdoption) => {
   let adoption = await findById(idAdoption);
 
   if (adoption.status) {
@@ -21,7 +21,8 @@ export const edit = async (idAdoption, idAnimal, idUser) => {
       try {
         await conn.update({
           Animals_idAnimal: idAnimal,
-          Users_idUser: idUser
+          Users_idUser: idUser,
+          statusAdoption: statusAdoption
         }).where({ idAdoption: idAdoption }).table('adoptions');
         return { status: true, id: idAdoption };
       } catch (error) {

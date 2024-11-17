@@ -8,7 +8,7 @@ export const selectSupplementCategoryController = async (request, response) => {
   let supplementCategory = await findById(idSupplementCategory);
 
   return supplementCategory.status
-    ? response.status(200).json({ sucess: true, values: [supplementCategory.values] })
+    ? response.status(200).json({ sucess: true, values: supplementCategory.values })
     : supplementCategory.status === undefined
       ? response.status(404).json({ sucess: false, message: 'Supplement category not found' })
       : response.status(500).json({ sucess: false, message: 'Failed to fetch supplement category', error: supplementCategory.error });

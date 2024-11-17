@@ -1,5 +1,6 @@
 import { conn } from "../../data/connection.js";
 import { create as AddressCreate } from "../Address/create.js";
+import { remove as Addressremove } from "../Address/remove.js";
 
 export const create = async (nameUser, cellPhoneNumber, email, address) => {
   if (address !== undefined) {
@@ -16,7 +17,7 @@ export const create = async (nameUser, cellPhoneNumber, email, address) => {
         }).table('users').returning(['idUser']);
         return { status: true, id: idUser[0] };
       } catch (error) {
-        await Address.remove(resultAddress.id);
+        await Addressremove(resultAddress.id);
         return { status: false, error: error };
       }
     }

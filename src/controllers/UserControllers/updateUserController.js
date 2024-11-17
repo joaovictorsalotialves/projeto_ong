@@ -23,13 +23,6 @@ export const updateUserController = async (request, response) => {
     }
   }
 
-  if (!nameUser || !cellPhoneNumber) {
-    return response.status(400).json({
-      success: false,
-      message: 'Bad request: Missing required fields'
-    });
-  }
-
   let result = await edit(idUser, nameUser, cellPhoneNumber, email, address);
 
   return result.status

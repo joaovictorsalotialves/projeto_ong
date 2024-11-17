@@ -25,7 +25,7 @@ employeeRouters.post('/forgot-password', forgotPasswordController);
 employeeRouters.post('/reset-password', authResetPassword, resetPasswordController);
 employeeRouters.post('/logout/:idEmployee', logoutController);
 
-employeeRouters.post('/', auth.authAdmin, insertEmployeeController);
+employeeRouters.post('/', insertEmployeeController);
 
 employeeRouters.put('/:idEmployee', auth.authEmployee, updateEmployeeController);
 employeeRouters.patch('/:idEmployee/password', auth.authEmployee, updateEmployeePasswordController);

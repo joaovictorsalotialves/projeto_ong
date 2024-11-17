@@ -2,7 +2,7 @@ import { edit } from "../../models/Adoption/edit.js";
 
 export const updateAdoptionController = async (request, response) => {
   let idAdoption = request.params.idAdoption;
-  let { idAnimal, idUser } = request.body;
+  let { idAnimal, idUser, statusAdoption } = request.body;
 
   if (isNaN(idAdoption)) return response.status(404).json({ success: false, message: 'Incorrect parameter' });
 
@@ -13,7 +13,7 @@ export const updateAdoptionController = async (request, response) => {
     });
   }
 
-  let result = await edit(idAdoption, idAnimal, idUser);
+  let result = await edit(idAdoption, idAnimal, idUser, statusAdoption);
 
   return result.status
     ? response.status(200).json({ success: true, message: 'Adoption updated successfully' })

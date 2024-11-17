@@ -15,26 +15,14 @@ export const userRouters = express.Router();
 
 const auth = new Auth();
 
-// userRouters.post('/', auth.authEmployee, insertUserController);
+userRouters.post('/', auth.authEmployee, insertUserController);
 
-// userRouters.put('/:idUser', auth.authEmployee, updateUserController);
+userRouters.put('/:idUser', auth.authEmployee, updateUserController);
 
-// userRouters.get('/', auth.authEmployee, selectUsersController);
-// userRouters.get('/:idUser', auth.authEmployee, selectUserController);
-// userRouters.get('/:idUser/donation', selectDonationForUserController);
-// userRouters.get('/:idUser/adoption', selectAdoptionForUserController);
-
-// userRouters.delete('/:idUser', auth.authEmployee, deleteUserController);
-// userRouters.delete('/:idUser/address', auth.authEmployee, deleteUserAddressController);
-
-userRouters.post('/', insertUserController);
-
-userRouters.put('/:idUser', updateUserController);
-
-userRouters.get('/', selectUsersController);
-userRouters.get('/:idUser', selectUserController);
+userRouters.get('/', auth.authEmployee, selectUsersController);
+userRouters.get('/:idUser', auth.authEmployee, selectUserController);
 userRouters.get('/:idUser/donation', selectDonationForUserController);
 userRouters.get('/:idUser/adoption', selectAdoptionForUserController);
 
-userRouters.delete('/:idUser', deleteUserController);
-userRouters.delete('/:idUser/address', deleteUserAddressController);
+userRouters.delete('/:idUser', auth.authEmployee, deleteUserController);
+userRouters.delete('/:idUser/address', auth.authEmployee, deleteUserAddressController);

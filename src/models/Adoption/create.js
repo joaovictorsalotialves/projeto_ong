@@ -3,7 +3,7 @@ import { editStatus as AnimalEditStatus } from "../Animal/editStatus.js";
 import { findById as AnimalFindById } from "../Animal/findById.js";
 import { findById as UserFindById } from "../User/findById.js";
 
-export const create = async (dateAdoption, idAnimal, idUser) => {
+export const create = async (dateAdoption, idAnimal, idUser, statusAdoption) => {
   let animal = await AnimalFindById(idAnimal);
   let user = await UserFindById(idUser);
 
@@ -16,7 +16,7 @@ export const create = async (dateAdoption, idAnimal, idUser) => {
     try {
       let idAdoption = await conn.insert({
         dateAdoption: dateAdoption,
-        statusAdoption: 'APPROVED',
+        statusAdoption: statusAdoption ? statusAdoption : 'APPROVED',
         Animals_idAnimal: idAnimal,
         Users_idUser: idUser
       }).table('adoptions').returning(['idAdoption']);

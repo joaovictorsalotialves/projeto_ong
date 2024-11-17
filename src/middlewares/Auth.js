@@ -38,7 +38,7 @@ export class Auth {
     let result = await this.auth(request);
 
     return result.status
-      ? result.position == 'admin'
+      ? result.position == 'Administrador'
         ? next()
         : response.status(403).json({ success: false, message: 'Unauthenticated' })
       : result.status === undefined
@@ -54,7 +54,7 @@ export class Auth {
     let result = await this.auth(request);
 
     return result.status
-      ? result.position == 'veterinarion'
+      ? result.position == 'Veterinario'
         ? next()
         : response.status(403).json({ success: false, message: 'Unauthenticated' })
       : result.status === undefined

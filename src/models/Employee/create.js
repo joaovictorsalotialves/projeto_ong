@@ -39,7 +39,7 @@ export const create = async (nameEmployee, cellPhoneNumber, email, password, pos
   }
 
   try {
-    let idEmployee = await knex.insert({
+    let idEmployee = await conn.insert({
       nameEmployee: nameEmployee,
       email: email,
       cellPhoneNumber: cellPhoneNumber,

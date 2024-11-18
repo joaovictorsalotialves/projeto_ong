@@ -4,10 +4,17 @@ export const updateDonationController = async (request, response) => {
   let idDonation = request.params.idDonation;
   let { valueDonation, description, idUser, idDonationCategory, supplementInput } = request.body;
 
-  if (!valueDonation || !idDonationCategory) {
+  if (!idDonationCategory) {
     return response.status(400).json({
       success: false,
       message: 'Bad request: Missing required fields'
+    });
+  }
+
+  if (!valueDonation && !supplementInput) {
+    return response.status(400).json({
+      success: false,
+      message: 'Bad request: No value assigned for donation'
     });
   }
 

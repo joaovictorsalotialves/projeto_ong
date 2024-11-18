@@ -13,7 +13,8 @@ export const findById = async (idDonation) => {
       'donationCategories.nameDonationCategory',
       'supplements.nameSupplement',
       'supplementInputs.idSupplementInput',
-      'supplementInputs.amount'
+      'supplementInputs.amount',
+      'supplementInputs.description',
     ]).from('donations')
       .leftJoin('users', 'donations.Users_idUser', '=', 'users.idUser')
       .join('donationcategories', 'donations.DonationCategories_idDonationCategory', '=', 'donationcategories.idDonationCategory')

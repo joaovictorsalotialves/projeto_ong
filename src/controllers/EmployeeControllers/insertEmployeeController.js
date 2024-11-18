@@ -29,6 +29,8 @@ export const insertEmployeeController = async (request, response) => {
 
   let result = await create(nameEmployee, cellPhoneNumber, email, password, position, address);
 
+  console.log(result)
+
   return result.status
     ? response.status(200).json({ sucess: true, id: result.id, message: 'Employee successfully registered' })
     : result.error

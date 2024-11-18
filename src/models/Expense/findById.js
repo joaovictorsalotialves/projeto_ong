@@ -11,7 +11,8 @@ export const findById = async (idExpense) => {
         'paymentDate',
         'dueDate',
         'statusExpense',
-        'expensecategories.nameExpenseCategory'
+        'expensecategories.idExpenseCategory',
+        'expensecategories.nameExpenseCategory',
       ]).from('expenses')
       .join('expensecategories', 'expenses.ExpenseCategories_idExpenseCategory', '=', 'expensecategories.idExpenseCategory')
       .where({ idExpense: idExpense });

@@ -10,7 +10,7 @@ export const editStatus = async (idAdoption, statusAdoption) => {
       await conn.update({
         statusAdoption: statusAdoption
       }).where({ idAdoption: idAdoption }).table('adoptions');
-      if (statusAdoption == 'APPROVED') {
+      if (statusAdoption == 'Aprovada') {
         await AnimalEditStatus(adoption.values.Animals_idAnimal, 'ADOPTED');
       } else {
         await AnimalEditStatus(adoption.values.Animals_idAnimal, 'AWAITING ADOPTION');

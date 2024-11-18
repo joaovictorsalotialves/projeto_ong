@@ -16,7 +16,7 @@ export const create = async (dateAdoption, idAnimal, idUser, statusAdoption) => 
     try {
       let idAdoption = await conn.insert({
         dateAdoption: dateAdoption,
-        statusAdoption: statusAdoption ? statusAdoption : 'APPROVED',
+        statusAdoption: statusAdoption ? statusAdoption : 'Aprovada',
         Animals_idAnimal: idAnimal,
         Users_idUser: idUser
       }).table('adoptions').returning(['idAdoption']);

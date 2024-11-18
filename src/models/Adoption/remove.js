@@ -1,4 +1,5 @@
 import { conn } from "../../data/connection.js";
+import { editStatus as AnimalEditStatus } from "../Animal/editStatus.js";
 import { findById } from "./findById.js";
 
 export const remove = async (idAdoption) => {
@@ -7,6 +8,7 @@ export const remove = async (idAdoption) => {
   if (adoption.status) {
     try {
       await conn.delete().where({ idAdoption: idAdoption }).table('adoptions');
+      await AnimalEditStatus(adoption.values.idAnimal, 'AWAITING ADOPTION');
       return { status: true };
     } catch (error) {
       return { status: false, error: error };

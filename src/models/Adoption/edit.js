@@ -1,4 +1,5 @@
 import { conn } from "../../data/connection.js";
+import { editStatus as AnimalEditStatus } from "../Animal/editStatus.js";
 import { findById as AnimalFindById } from "../Animal/findById.js";
 import { findById as UserFindById } from "../User/findById.js";
 import { findById } from "./findById.js";
@@ -16,6 +17,10 @@ export const edit = async (idAdoption, idAnimal, idUser, statusAdoption) => {
           status: false,
           message: 'Animal has already been adopted'
         }
+      }
+
+      if (adoption.values.idAnimal != idAnimal) {
+        await AnimalEditStatus(adoption.values.idAnimal, 'AWAITING ADOPTION');
       }
 
       try {

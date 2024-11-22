@@ -9,7 +9,7 @@ export const updateUserController = async (request, response) => {
   if (!nameUser || !cellPhoneNumber) {
     return response.status(400).json({
       success: false,
-      message: 'Bad request: Missing required fields'
+      message: 'Bad request: Missing required fields 1'
     });
   }
 
@@ -18,7 +18,7 @@ export const updateUserController = async (request, response) => {
     if (!publicPlace || !neighborhood || !number || !idState || !idCity) {
       return response.status(400).json({
         success: false,
-        message: 'Bad request: Missing required fields'
+        message: 'Bad request: Missing required fields 2'
       });
     }
   }

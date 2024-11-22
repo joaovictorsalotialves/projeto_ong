@@ -5,7 +5,7 @@ export const create = async (valueExpense, description, registrationDate, paymen
   let expenseCategory = await ExpenseCategoryFindById(idExpenseCategory);
 
   if (expenseCategory.status) {
-    let statusExpense = paymentDate ? 'paid' : dueDate < registrationDate ? 'overdue' : 'not paid';
+    let statusExpense = paymentDate ? 'Paga' : dueDate > registrationDate ? 'Atrasada' : 'Não Paga';
 
     try {
       let idExpense = await conn.insert({

@@ -3,6 +3,7 @@ import { create as AddressCreate } from "../Address/create.js";
 import { edit as AddressEdit } from "../Address/edit.js";
 import { findByEmail } from "./findByEmail.js";
 import { findById } from "./findById.js";
+import { removeAddress } from "./removeAddress.js";
 
 export const edit = async (idEmployee, nameEmployee, cellPhoneNumber, email, position, address) => {
   let employee = await findById(idEmployee);
@@ -42,12 +43,15 @@ export const edit = async (idEmployee, nameEmployee, cellPhoneNumber, email, pos
       return { ...resultAddress };
     }
 
+    if (employee.values.Addresses_idAddress) {
+      await removeAddress(employee.values.idEmployee);
+    }
     try {
-      await knex.update({
+      await conn.update({
         nameEmployee: nameEmployee,
         email: email,
         cellPhoneNumber: cellPhoneNumber,
-        position: position
+        position: position,
       }).where({ idEmployee: idEmployee }).table('employees');
       return { status: true };
     } catch (error) {

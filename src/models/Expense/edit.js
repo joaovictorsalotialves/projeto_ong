@@ -9,10 +9,9 @@ export const edit = async (idExpense, valueExpense, description, paymentDate, du
     let expenseCategory = await ExpenseCategoryFindById(idExpenseCategory);
 
     if (expenseCategory.status) {
-      let dueDate = new Date(expense.values.dueDate);
       let nowDate = new Date();
 
-      let statusExpense = paymentDate ? 'paid' : dueDate < nowDate ? 'overdue' : 'not paid';
+      let statusExpense = paymentDate ? 'Paga' : dueDate > nowDate ? 'Atrasada' : 'Não Paga';
 
       try {
         await conn.update({

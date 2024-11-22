@@ -11,6 +11,7 @@ export const findById = async (idDonation) => {
       'users.nameUser',
       'donationCategories.idDonationCategory',
       'donationCategories.nameDonationCategory',
+      'supplements.idSupplement',
       'supplements.nameSupplement',
       'supplementInputs.idSupplementInput',
       'supplementInputs.amount',

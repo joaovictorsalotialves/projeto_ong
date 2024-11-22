@@ -7,7 +7,7 @@ export const editPayment = async (idExpense, paymentDate) => {
   let dueDate = new Date(expense.values.dueDate);
   let nowDate = new Date();
 
-  let statusExpense = paymentDate ? 'paid' : dueDate < nowDate ? 'overdue' : 'not paid';
+  let statusExpense = paymentDate ? 'Paga' : dueDate > nowDate ? 'Atrasada' : 'Não Paga';
 
   if (expense.status) {
     try {

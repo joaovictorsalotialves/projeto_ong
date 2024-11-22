@@ -2,6 +2,7 @@ import { conn } from "../../data/connection.js";
 import { create as AddressCreate } from "../Address/create.js";
 import { edit as AddressEdit } from "../Address/edit.js";
 import { findById } from "./findById.js";
+import { removeAddress } from "./removeAddress.js";
 
 export const edit = async (idUser, nameUser, cellPhoneNumber, email, address) => {
   let user = await findById(idUser);
@@ -32,6 +33,9 @@ export const edit = async (idUser, nameUser, cellPhoneNumber, email, address) =>
       return { ...resultAddress };
     }
 
+    if (user.values.Addresses_idAddress) {
+      await removeAddress(user.values.idUser);
+    }
     try {
       await conn.update({
         nameUser: nameUser,

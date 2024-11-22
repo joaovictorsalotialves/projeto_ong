@@ -9,10 +9,18 @@ export const edit = async (idDonation, valueDonation, description, donationDate,
   let donation = await findById(idDonation);
 
   if (donation.status) {
-    let user = await UserFindById(idUser);
+    if (idUser) {
+      let user = await UserFindById(idUser);
+      if (!user.status) {
+        return {
+          status: false,
+          message: 'Bad request: Invalid user ID',
+        };
+      }
+    }
     let donationCategory = await DonationCategoryFindById(idDonationCategory);
 
-    if (user.status && donationCategory.status) {
+    if (donationCategory.status) {
       if (supplementInput !== undefined) {
         let { description, amount, idSupplement } = supplementInput;
         let resultSupplementInput;
@@ -28,7 +36,7 @@ export const edit = async (idDonation, valueDonation, description, donationDate,
               valueDonation: valueDonation,
               description: description,
               donationDate: donationDate,
-              Users_idUser: idUser,
+              Users_idUser: idUser ? idUser : null,
               DonationCategories_idDonationCategory: idDonationCategory,
               SupplementInputs_idSupplementInput: resultSupplementInput.id
             }).where({ idDonation: idDonation }).table('donations');
@@ -46,7 +54,7 @@ export const edit = async (idDonation, valueDonation, description, donationDate,
           valueDonation: valueDonation,
           description: description,
           donationDate: donationDate,
-          Users_idUser: idUser,
+          Users_idUser: idUser ? idUser : null,
           DonationCategories_idDonationCategory: idDonationCategory
         }).where({ idDonation: idDonation }).table('donations');
         return { status: true };
@@ -57,11 +65,7 @@ export const edit = async (idDonation, valueDonation, description, donationDate,
 
     return {
       status: false,
-      message: user.status
-        ? donationCategory.status
-          ? 'Bad request: Invalid supplement input ID'
-          : 'Bad request: Invalid donation category ID'
-        : 'Bad request: Invalid user ID'
+      message: 'Bad request: Invalid donation category ID',
     };
   }
 

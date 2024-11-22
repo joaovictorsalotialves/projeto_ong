@@ -4,10 +4,18 @@ import { create as SupplementInputCreate } from "../SupplementInput/create.js";
 import { findById as UserFindById } from "../User/findById.js";
 
 export const create = async (valueDonation, description, donationDate, idUser, idDonationCategory, supplementInput) => {
-  let user = await UserFindById(idUser);
+  if (idUser) {
+    let user = await UserFindById(idUser);
+    if (!user.status) {
+      return {
+        status: false,
+        message: 'Bad request: Invalid user ID',
+      };
+    }
+  }
   let donationCategory = await DonationCategoryFindById(idDonationCategory);
 
-  if (user.status && donationCategory.status) {
+  if (donationCategory.status) {
     if (supplementInput !== undefined) {
       let { descriptionSupplementInput, amount, idSupplement } = supplementInput;
       let resultSupplementInput = await SupplementInputCreate(descriptionSupplementInput, amount, donationDate, idSupplement);
@@ -18,7 +26,7 @@ export const create = async (valueDonation, description, donationDate, idUser, i
             valueDonation: valueDonation,
             description: description,
             donationDate: donationDate,
-            Users_idUser: idUser,
+            Users_idUser: idUser ? idUser : null,
             DonationCategories_idDonationCategory: idDonationCategory,
             SupplementInputs_idSupplementInput: resultSupplementInput.id
           }).table('donations').returning(['idDonation']);
@@ -36,8 +44,8 @@ export const create = async (valueDonation, description, donationDate, idUser, i
         valueDonation: valueDonation,
         description: description,
         donationDate: donationDate,
-        Users_idUser: idUser,
-        DonationCategories_idDonationCategory: idDonationCategory
+        Users_idUser: idUser ? idUser : null,
+        DonationCategories_idDonationCategory: idDonationCategory,
       }).table('donations').returning(['idDonation']);
       return { status: true, id: idDonation[0] };
     } catch (error) {
@@ -47,8 +55,6 @@ export const create = async (valueDonation, description, donationDate, idUser, i
 
   return {
     status: false,
-    message: user.status
-      ? 'Bad request: Invalid donation category ID'
-      : 'Bad request: Invalid user ID'
+    message: 'Bad request: Invalid donation category ID',
   };
 }

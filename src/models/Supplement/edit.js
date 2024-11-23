@@ -3,7 +3,7 @@ import { findById as SupplementCategoryFindById } from "../SupplementCategory/fi
 import { findById } from "./findById.js";
 import { findByNsTmIdSC } from "./findByNsTmIdSC.js";
 
-export const edit = async (idSupplement, nameSupplement, typeMensure, idSupplementCategory) => {
+export const edit = async (idSupplement, nameSupplement, stock, typeMensure, idSupplementCategory) => {
   let supplement = await findById(idSupplement);
   let verificationSupplement = await findByNsTmIdSC(nameSupplement, typeMensure, idSupplementCategory);
 
@@ -23,6 +23,7 @@ export const edit = async (idSupplement, nameSupplement, typeMensure, idSuppleme
       try {
         await conn.update({
           nameSupplement: nameSupplement,
+          stock: stock ? stock : 0,
           typeMensure: typeMensure,
           SupplementCategories_idSupplementCategory: idSupplementCategory
         }).where({ idSupplement: idSupplement }).table('supplements');

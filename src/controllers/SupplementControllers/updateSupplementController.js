@@ -2,7 +2,7 @@ import { edit } from "../../models/Supplement/edit.js";
 
 export const updateSupplementController = async (request, response) => {
   let idSupplement = request.params.idSupplement;
-  let { nameSupplement, typeMensure, idSupplementCategory } = request.body;
+  let { nameSupplement, stock, typeMensure, idSupplementCategory } = request.body;
   nameSupplement = nameSupplement.toUpperCase();
 
   if (isNaN(idSupplement)) return response.status(404).json({ sucess: false, message: 'Incorrect parameter' });
@@ -14,7 +14,7 @@ export const updateSupplementController = async (request, response) => {
     });
   }
 
-  let result = await edit(idSupplement, nameSupplement, typeMensure, idSupplementCategory);
+  let result = await edit(idSupplement, nameSupplement, stock, typeMensure, idSupplementCategory);
 
   return result.status
     ? response.status(200).json({ sucess: true, message: 'Supplement changed successfully' })

@@ -12,20 +12,11 @@ export const clinicalReportRouters = express.Router();
 
 const auth = new Auth();
 
-// clinicalReportRouters.post('/', auth.authVeterinarion, insertClinicalReportController);
+clinicalReportRouters.post('/', auth.authVeterinarion, insertClinicalReportController);
 
-// clinicalReportRouters.put('/:idClinicalReport', auth.authVeterinarion, updateClinicalReportController);
-
-// clinicalReportRouters.get('/', selectClinicalReportsController);
-// clinicalReportRouters.get('/:idClinicalReport', selectClinicalReportController);
-
-// clinicalReportRouters.delete('/:idClinicalReport', auth.authVeterinarion, deleteClinicalReportController);
-
-clinicalReportRouters.post('/', insertClinicalReportController);
-
-clinicalReportRouters.put('/:idClinicalReport', updateClinicalReportController);
+clinicalReportRouters.put('/:idClinicalReport', auth.authVeterinarion, updateClinicalReportController);
 
 clinicalReportRouters.get('/', selectClinicalReportsController);
 clinicalReportRouters.get('/:idClinicalReport', selectClinicalReportController);
 
-clinicalReportRouters.delete('/:idClinicalReport', deleteClinicalReportController);
+clinicalReportRouters.delete('/:idClinicalReport', auth.authVeterinarion, deleteClinicalReportController);

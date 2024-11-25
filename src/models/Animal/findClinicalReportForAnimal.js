@@ -14,10 +14,16 @@ export const findClinicalReportForAnimal = async (idAnimal, registrationDate) =>
         'animals.idAnimal',
         'animals.nameAnimal',
         'employees.idEmployee',
-        'employees.nameEmployee'
+        'employees.nameEmployee',
+        'species.idSpecies',
+        'species.nameSpecies',
+        'races.idRace',
+        'races.nameRace',
       ]).from('clinicalreports')
         .join('animals', 'clinicalreports.Animals_idAnimal', '=', 'animals.idAnimal')
         .join('employees', 'clinicalreports.Employees_idEmployee', '=', 'employees.idEmployee')
+        .join('species', 'animals.Species_idSpecies', '=', 'species.idSpecies')
+        .join('races', 'animals.Races_idRace', '=', 'races.idRace')
         .where({ idAnimal: idAnimal })
         .where(function () {
           if (registrationDate) this.where({ registrationDate: registrationDate });

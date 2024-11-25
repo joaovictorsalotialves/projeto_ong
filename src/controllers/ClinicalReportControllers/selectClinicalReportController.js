@@ -8,7 +8,7 @@ export const selectClinicalReportController = async (request, response) => {
   let clinicalReport = await findById(idClinicalReport);
 
   return clinicalReport.status
-    ? response.status(200).json({ success: true, values: [clinicalReport.values] })
+    ? response.status(200).json({ success: true, values: clinicalReport.values })
     : clinicalReport.status === undefined
       ? response.status(404).json({ success: false, message: 'Clinical report not found' })
       : response.status(500).json({ success: false, message: 'Failed to fetch clinical report', error: clinicalReport.error });

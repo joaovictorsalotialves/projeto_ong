@@ -7,6 +7,8 @@ export const deleteAnimalController = async (request, response) => {
 
   let result = await remove(idAnimal);
 
+  console.log(result);
+
   return result.status
     ? response.status(200).json({ success: true, message: 'Animal deleted successfully' })
     : result.error

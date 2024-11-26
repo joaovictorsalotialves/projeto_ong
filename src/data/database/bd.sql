@@ -1,3 +1,5 @@
+CREATE DATABASE  IF NOT EXISTS `projeto_ong` /*!40100 DEFAULT CHARACTER SET utf8mb3 */ /*!80016 DEFAULT ENCRYPTION='N' */;
+USE `projeto_ong`;
 -- MySQL dump 10.13  Distrib 8.0.34, for Win64 (x86_64)
 --
 -- Host: 127.0.0.1    Database: projeto_ong
@@ -35,7 +37,7 @@ CREATE TABLE `addresses` (
   KEY `fk_Addresses_Cities1_idx` (`Cities_idCity`),
   CONSTRAINT `fk_Addresses_Cities1` FOREIGN KEY (`Cities_idCity`) REFERENCES `cities` (`idCity`),
   CONSTRAINT `fk_Addresses_States1` FOREIGN KEY (`States_idState`) REFERENCES `states` (`idState`)
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -44,7 +46,6 @@ CREATE TABLE `addresses` (
 
 LOCK TABLES `addresses` WRITE;
 /*!40000 ALTER TABLE `addresses` DISABLE KEYS */;
-INSERT INTO `addresses` VALUES (2,'123 Main St','Downtown','456','Apartment 2A',1,10),(5,'Av. Brasil','Centro','123','Complement',25,3823),(7,'Av. Brasil','Vila Brasil','123','Próximo ao Biondo',25,3823),(8,'Av. Brasil','Vila Brasil','123','Próximo ao Biondo',8,3100),(9,'Av. Brasil','Vila Brasil','123','Próximo ao Biondo',25,3823),(10,'Av. Brasil','Vila Brasil','123','Próximo ao Biondo',8,3101),(13,'Av. Brasil','Vila Brasil','123','Próximo ao Biondo',8,3101),(14,'Av. Brasil','Vila Brasil','123','Próximo ao Biondo',25,3823),(16,'Av. Brasil','Vila Brasil','123','',1,53);
 /*!40000 ALTER TABLE `addresses` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -64,9 +65,9 @@ CREATE TABLE `adoptions` (
   PRIMARY KEY (`idAdoption`),
   KEY `fk_Adoptions_Animals1_idx` (`Animals_idAnimal`),
   KEY `fk_Adoptions_Users1_idx` (`Users_idUser`),
-  CONSTRAINT `fk_Adoptions_Animals1` FOREIGN KEY (`Animals_idAnimal`) REFERENCES `animals` (`idAnimal`),
-  CONSTRAINT `fk_Adoptions_Users1` FOREIGN KEY (`Users_idUser`) REFERENCES `users` (`idUser`)
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb3;
+  CONSTRAINT `fk_Adoptions_Animals1` FOREIGN KEY (`Animals_idAnimal`) REFERENCES `animals` (`idAnimal`) ON UPDATE CASCADE,
+  CONSTRAINT `fk_Adoptions_Users1` FOREIGN KEY (`Users_idUser`) REFERENCES `users` (`idUser`) ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -75,7 +76,6 @@ CREATE TABLE `adoptions` (
 
 LOCK TABLES `adoptions` WRITE;
 /*!40000 ALTER TABLE `adoptions` DISABLE KEYS */;
-INSERT INTO `adoptions` VALUES (6,'2024-10-31','APPROVED',1,1),(7,'2024-10-31','APPROVED',1,1),(8,'2024-10-31','APPROVED',1,1),(9,'2024-10-31','APPROVED',1,1),(10,'2024-10-31','APPROVED',1,1),(11,'2024-10-31','APPROVED',1,1),(12,'2024-10-31','APPROVED',1,1),(13,'2024-10-31','APPROVED',1,1);
 /*!40000 ALTER TABLE `adoptions` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -97,9 +97,9 @@ CREATE TABLE `animals` (
   PRIMARY KEY (`idAnimal`),
   KEY `fk_Animals_Species1_idx` (`Species_idSpecies`),
   KEY `fk_Animals_Races1_idx` (`Races_idRace`),
-  CONSTRAINT `fk_Animals_Races1` FOREIGN KEY (`Races_idRace`) REFERENCES `races` (`idRace`),
-  CONSTRAINT `fk_Animals_Species1` FOREIGN KEY (`Species_idSpecies`) REFERENCES `species` (`idSpecies`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb3;
+  CONSTRAINT `fk_Animals_Races1` FOREIGN KEY (`Races_idRace`) REFERENCES `races` (`idRace`) ON UPDATE CASCADE,
+  CONSTRAINT `fk_Animals_Species1` FOREIGN KEY (`Species_idSpecies`) REFERENCES `species` (`idSpecies`) ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -108,7 +108,6 @@ CREATE TABLE `animals` (
 
 LOCK TABLES `animals` WRITE;
 /*!40000 ALTER TABLE `animals` DISABLE KEYS */;
-INSERT INTO `animals` VALUES (1,'CACHORRO TESTE','Grande','AWAITING ADOPTION','',1,1);
 /*!40000 ALTER TABLE `animals` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -125,7 +124,7 @@ CREATE TABLE `cities` (
   `States_idState` int NOT NULL,
   PRIMARY KEY (`idCity`),
   KEY `fk_Cities_States1_idx` (`States_idState`),
-  CONSTRAINT `fk_Cities_States1` FOREIGN KEY (`States_idState`) REFERENCES `states` (`idState`)
+  CONSTRAINT `fk_Cities_States1` FOREIGN KEY (`States_idState`) REFERENCES `states` (`idState`) ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=5571 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -156,9 +155,9 @@ CREATE TABLE `clinicalreports` (
   PRIMARY KEY (`idClinicalReport`),
   KEY `fk_ClinicalReports_Animals1_idx` (`Animals_idAnimal`),
   KEY `fk_ClinicalReports_Employees1_idx` (`Employees_idEmployee`),
-  CONSTRAINT `fk_ClinicalReports_Animals1` FOREIGN KEY (`Animals_idAnimal`) REFERENCES `animals` (`idAnimal`),
-  CONSTRAINT `fk_ClinicalReports_Employees1` FOREIGN KEY (`Employees_idEmployee`) REFERENCES `employees` (`idEmployee`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb3;
+  CONSTRAINT `fk_ClinicalReports_Animals1` FOREIGN KEY (`Animals_idAnimal`) REFERENCES `animals` (`idAnimal`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `fk_ClinicalReports_Employees1` FOREIGN KEY (`Employees_idEmployee`) REFERENCES `employees` (`idEmployee`) ON DELETE RESTRICT ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -171,6 +170,25 @@ LOCK TABLES `clinicalreports` WRITE;
 UNLOCK TABLES;
 
 --
+-- Temporary view structure for view `clinicalreportsview`
+--
+
+DROP TABLE IF EXISTS `clinicalreportsview`;
+/*!50001 DROP VIEW IF EXISTS `clinicalreportsview`*/;
+SET @saved_cs_client     = @@character_set_client;
+/*!50503 SET character_set_client = utf8mb4 */;
+/*!50001 CREATE VIEW `clinicalreportsview` AS SELECT 
+ 1 AS `idClinicalReport`,
+ 1 AS `registrationDate`,
+ 1 AS `editionDate`,
+ 1 AS `descriptionClinicalReport`,
+ 1 AS `nameAnimal`,
+ 1 AS `EmployeeName`,
+ 1 AS `SpeciesName`,
+ 1 AS `RacesName`*/;
+SET character_set_client = @saved_cs_client;
+
+--
 -- Table structure for table `donationcategories`
 --
 
@@ -181,7 +199,7 @@ CREATE TABLE `donationcategories` (
   `idDonationCategory` int NOT NULL AUTO_INCREMENT,
   `nameDonationCategory` varchar(50) NOT NULL,
   PRIMARY KEY (`idDonationCategory`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -190,7 +208,6 @@ CREATE TABLE `donationcategories` (
 
 LOCK TABLES `donationcategories` WRITE;
 /*!40000 ALTER TABLE `donationcategories` DISABLE KEYS */;
-INSERT INTO `donationcategories` VALUES (1,'CARTÃO');
 /*!40000 ALTER TABLE `donationcategories` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -213,10 +230,10 @@ CREATE TABLE `donations` (
   KEY `fk_Donations_Users1_idx` (`Users_idUser`),
   KEY `fk_Donations_DonationCategories1_idx` (`DonationCategories_idDonationCategory`),
   KEY `fk_Donations_SupplementInputs1_idx` (`SupplementInputs_idSupplementInput`),
-  CONSTRAINT `fk_Donations_DonationCategories1` FOREIGN KEY (`DonationCategories_idDonationCategory`) REFERENCES `donationcategories` (`idDonationCategory`),
-  CONSTRAINT `fk_Donations_SupplementInputs1` FOREIGN KEY (`SupplementInputs_idSupplementInput`) REFERENCES `supplementinputs` (`idSupplementInput`),
-  CONSTRAINT `fk_Donations_Users1` FOREIGN KEY (`Users_idUser`) REFERENCES `users` (`idUser`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb3;
+  CONSTRAINT `fk_Donations_DonationCategories1` FOREIGN KEY (`DonationCategories_idDonationCategory`) REFERENCES `donationcategories` (`idDonationCategory`) ON UPDATE CASCADE,
+  CONSTRAINT `fk_Donations_SupplementInputs1` FOREIGN KEY (`SupplementInputs_idSupplementInput`) REFERENCES `supplementinputs` (`idSupplementInput`) ON DELETE RESTRICT ON UPDATE CASCADE,
+  CONSTRAINT `fk_Donations_Users1` FOREIGN KEY (`Users_idUser`) REFERENCES `users` (`idUser`) ON DELETE SET NULL ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -225,7 +242,6 @@ CREATE TABLE `donations` (
 
 LOCK TABLES `donations` WRITE;
 /*!40000 ALTER TABLE `donations` DISABLE KEYS */;
-INSERT INTO `donations` VALUES (1,2000,'Donation for school','2024-10-31',1,1,2),(2,2000,'','2024-10-31',1,1,NULL),(3,100,'','2024-10-31',1,1,4),(5,2000,NULL,'2024-10-31',1,1,NULL),(6,2000,NULL,'2024-10-31',1,1,NULL);
 /*!40000 ALTER TABLE `donations` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -249,7 +265,7 @@ CREATE TABLE `employees` (
   PRIMARY KEY (`idEmployee`),
   KEY `fk_Employees_Addresses1_idx` (`Addresses_idAddress`),
   CONSTRAINT `fk_Employees_Addresses1` FOREIGN KEY (`Addresses_idAddress`) REFERENCES `addresses` (`idAddress`) ON DELETE SET NULL ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -258,7 +274,7 @@ CREATE TABLE `employees` (
 
 LOCK TABLES `employees` WRITE;
 /*!40000 ALTER TABLE `employees` DISABLE KEYS */;
-INSERT INTO `employees` VALUES (2,'João Victor','jsalotialves@gmail.com','019989263759','$2a$10$tkAA4mFCcyF/9y8aE.h2XubQFhi2vSrvcmWoIz.DoSQixD1Ix9xGi','eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImpzYWxvdGlhbHZlc0BnbWFpbC5jb20iLCJwb3NpdGlvbiI6IkFkbWluaXN0cmFkb3IiLCJpYXQiOjE3MzE5MzY0OTUsImV4cCI6MTczMTk2NTI5NX0._sgYtT1ugn-ICxnHq1uIBSaSIZgqW8DFIA0UVT2OV-4',NULL,'Administrador',5),(3,'João','salotialves@gmail.com','019989263759','$2a$10$TKHqtmPXP/12IRCmPcXHaOjXXmDhhiBYNhhpJTpTTvpLll3Uc8wJ6','eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNhbG90aWFsdmVzQGdtYWlsLmNvbSIsInBvc2l0aW9uIjoiQWRtaW5pc3RyYWRvciIsImlhdCI6MTczMTgwNDQ3NSwiZXhwIjoxNzMxODMzMjc1fQ.w0Rvs7Qz7xMeXXhzmRk4UeYnMnbX8ZfT0FNW71ntwCc',NULL,'Administrador',7),(4,'JOAO VICTOR SALOTI ALVES','jcsijai@gmail.com','019989263759','$2a$10$qw/VTmjQrC85mBqTq4dgsO43wA7wV..eDI.Iz6ofXHFVnvZ5gDdFu',NULL,NULL,'Administrador',8),(5,'JOAO VICTOR SALOTI ALVES','master.thebullsburger@gmail.com','019989263759','$2a$10$HYr6g/gNwiPvu32H6ipJduYwaADB568rbV/22FhML3616K7UiR636',NULL,NULL,'Funcionario',9),(7,'JOAO VICTOR SALOTI ALVES','j@gmail.com','019989263759','$2a$10$QEHrbJ8JWmeqMX8v1wNNlOPzc8HFjFGbtl8yTWGAy/9dGuzPh1mAC',NULL,NULL,'Administrador',16);
+INSERT INTO `employees` VALUES (1,'admin','jsalotialves@gmail.com','019989263759','$2a$10$8ZN8RNkmBGQ.Mi4kWI1AnetDtNscH.dDadcab1erlpiYMOhX6VBI6','eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImpzYWxvdGlhbHZlc0BnbWFpbC5jb20iLCJwb3NpdGlvbiI6IkFkbWluaXN0cmFkb3IiLCJpYXQiOjE3MzI1ODU0MzMsImV4cCI6MTczMjYxNDIzM30.bvCfMWm36ccsnAbJjRqB8Pe9Avuhk3mYoWxUzQGRba4',NULL,'Administrador',NULL);
 /*!40000 ALTER TABLE `employees` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -273,7 +289,7 @@ CREATE TABLE `expensecategories` (
   `idExpenseCategory` int NOT NULL AUTO_INCREMENT,
   `nameExpenseCategory` varchar(50) NOT NULL,
   PRIMARY KEY (`idExpenseCategory`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -282,7 +298,6 @@ CREATE TABLE `expensecategories` (
 
 LOCK TABLES `expensecategories` WRITE;
 /*!40000 ALTER TABLE `expensecategories` DISABLE KEYS */;
-INSERT INTO `expensecategories` VALUES (2,'TESTE');
 /*!40000 ALTER TABLE `expensecategories` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -304,8 +319,8 @@ CREATE TABLE `expenses` (
   `ExpenseCategories_idExpenseCategory` int NOT NULL,
   PRIMARY KEY (`idExpense`),
   KEY `fk_Expeses_ExpeseCategories1_idx` (`ExpenseCategories_idExpenseCategory`),
-  CONSTRAINT `fk_Expeses_ExpeseCategories1` FOREIGN KEY (`ExpenseCategories_idExpenseCategory`) REFERENCES `expensecategories` (`idExpenseCategory`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb3;
+  CONSTRAINT `fk_Expeses_ExpeseCategories1` FOREIGN KEY (`ExpenseCategories_idExpenseCategory`) REFERENCES `expensecategories` (`idExpenseCategory`) ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -314,7 +329,6 @@ CREATE TABLE `expenses` (
 
 LOCK TABLES `expenses` WRITE;
 /*!40000 ALTER TABLE `expenses` DISABLE KEYS */;
-INSERT INTO `expenses` VALUES (1,1000,'description','2024-10-29','2024-10-30','2024-09-20','paid',2),(3,1100.34,'','2024-11-18','2024-11-18','2024-11-20','paid',2),(4,1100.34,'gege','2024-11-18',NULL,'2024-11-15','overdue',2),(5,1100.34,'hehe','2024-11-18',NULL,'2024-11-20','not paid',2);
 /*!40000 ALTER TABLE `expenses` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -329,7 +343,7 @@ CREATE TABLE `races` (
   `idRace` int NOT NULL AUTO_INCREMENT,
   `nameRace` varchar(50) NOT NULL,
   PRIMARY KEY (`idRace`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -338,33 +352,7 @@ CREATE TABLE `races` (
 
 LOCK TABLES `races` WRITE;
 /*!40000 ALTER TABLE `races` DISABLE KEYS */;
-INSERT INTO `races` VALUES (1,'PASTOR ALEMÃO');
 /*!40000 ALTER TABLE `races` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `sessions`
---
-
-DROP TABLE IF EXISTS `sessions`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `sessions` (
-  `session_id` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
-  `expires` int unsigned NOT NULL,
-  `data` mediumtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin,
-  PRIMARY KEY (`session_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `sessions`
---
-
-LOCK TABLES `sessions` WRITE;
-/*!40000 ALTER TABLE `sessions` DISABLE KEYS */;
-INSERT INTO `sessions` VALUES ('3ViJy2TMDUhTZN6OGL2EVin939jqdWZ6',1731430876,'{\"cookie\":{\"originalMaxAge\":86400000,\"expires\":\"2024-11-12T17:01:16.267Z\",\"secure\":true,\"httpOnly\":true,\"path\":\"/\"},\"validationToken\":\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImpzYWxvdGlhbHZlc0BnbWFpbC5jb20iLCJwb3NpdGlvbiI6InZldGVyaW5hcmlhbiIsImlhdCI6MTczMTM0NDQ3NiwiZXhwIjoxNzMxMzczMjc2fQ.uIKflaIIFK8zQDmqGej1ZUX3s0EtZIdACzZ0V1w3lSE\"}'),('4qDDo-gSWzmYISeuU6DzHbFaK5GHY5U8',1731430059,'{\"cookie\":{\"originalMaxAge\":86400000,\"expires\":\"2024-11-12T16:47:38.827Z\",\"secure\":true,\"httpOnly\":true,\"path\":\"/\"},\"validationToken\":\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImpzYWxvdGlhbHZlc0BnbWFpbC5jb20iLCJwb3NpdGlvbiI6InZldGVyaW5hcmlhbiIsImlhdCI6MTczMTM0MzY1OCwiZXhwIjoxNzMxMzcyNDU4fQ.ktZ-wTtkIQ4h0GmNInnx_0yJGwLqQbLnAQgEw58g-yY\"}'),('84rF5rPxxkvj5DXhbZQpEqd1MOK_XRjs',1731430932,'{\"cookie\":{\"originalMaxAge\":86400000,\"expires\":\"2024-11-12T17:02:11.767Z\",\"secure\":true,\"httpOnly\":true,\"path\":\"/\"},\"validationToken\":\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImpzYWxvdGlhbHZlc0BnbWFpbC5jb20iLCJwb3NpdGlvbiI6InZldGVyaW5hcmlhbiIsImlhdCI6MTczMTM0NDUzMSwiZXhwIjoxNzMxMzczMzMxfQ.PDZTGCG4EGC9hul4ZvEBffMrDC5Yxj3tShnwKH4K5j4\"}'),('B-E-Ma0ZXSJsiA5W9bKYaGKUlVp43r-p',1731432132,'{\"cookie\":{\"originalMaxAge\":86400000,\"expires\":\"2024-11-12T17:22:12.193Z\",\"secure\":true,\"httpOnly\":true,\"path\":\"/\"},\"validationToken\":\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImpzYWxvdGlhbHZlc0BnbWFpbC5jb20iLCJwb3NpdGlvbiI6InZldGVyaW5hcmlhbiIsImlhdCI6MTczMTM0NTczMiwiZXhwIjoxNzMxMzc0NTMyfQ.Ksr-8r2uLmKec7I7rWQRfrzC-6LzMXHWNkv3JDPtwE8\"}'),('G6p8GwQMlmRMvAJlid5Yd30Z3Nob5fha',1731431961,'{\"cookie\":{\"originalMaxAge\":86400000,\"expires\":\"2024-11-12T17:19:21.485Z\",\"secure\":true,\"httpOnly\":true,\"path\":\"/\"},\"validationToken\":\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImpzYWxvdGlhbHZlc0BnbWFpbC5jb20iLCJwb3NpdGlvbiI6InZldGVyaW5hcmlhbiIsImlhdCI6MTczMTM0NTU2MSwiZXhwIjoxNzMxMzc0MzYxfQ.xSRHEpdEN_TaQ1umfgsv5C9xn5B8udo_DuY_AYNo6og\"}'),('R-kzGNPenceUZF2PeGCTlTrvIRVr5qGy',1731431660,'{\"cookie\":{\"originalMaxAge\":86400000,\"expires\":\"2024-11-12T17:14:20.147Z\",\"secure\":true,\"httpOnly\":true,\"path\":\"/\"},\"validationToken\":\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImpzYWxvdGlhbHZlc0BnbWFpbC5jb20iLCJwb3NpdGlvbiI6InZldGVyaW5hcmlhbiIsImlhdCI6MTczMTM0NTI2MCwiZXhwIjoxNzMxMzc0MDYwfQ.4ZVizABMaNjO_FCFZeRLawJVWAVPoKVjm5Fj8ncgCqY\"}'),('XZDcpCJV9NAMaZ9ulh24lsKE_HweH6DS',1731431676,'{\"cookie\":{\"originalMaxAge\":86400000,\"expires\":\"2024-11-12T17:14:35.983Z\",\"secure\":true,\"httpOnly\":true,\"path\":\"/\"},\"validationToken\":\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImpzYWxvdGlhbHZlc0BnbWFpbC5jb20iLCJwb3NpdGlvbiI6InZldGVyaW5hcmlhbiIsImlhdCI6MTczMTM0NTI3NiwiZXhwIjoxNzMxMzc0MDc2fQ.kFMnTxS60Fc-VmFGppUzzZy2Oiu7E37gOF411K8IIZo\"}'),('agaGh8TVEp7hEoWm3wGQfDEmM1O1A2gk',1731431304,'{\"cookie\":{\"originalMaxAge\":86400000,\"expires\":\"2024-11-12T17:08:24.143Z\",\"secure\":true,\"httpOnly\":true,\"path\":\"/\"},\"validationToken\":\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImpzYWxvdGlhbHZlc0BnbWFpbC5jb20iLCJwb3NpdGlvbiI6InZldGVyaW5hcmlhbiIsImlhdCI6MTczMTM0NDkwNCwiZXhwIjoxNzMxMzczNzA0fQ.QO5E-A979QL4GC78cSqgBAUzqcFWsj0GKtxOlDHAMtU\"}'),('krm_TJqf7dQ1_U0l4XmPlOX6Lrm-zMCE',1731431729,'{\"cookie\":{\"originalMaxAge\":86400000,\"expires\":\"2024-11-12T17:15:28.766Z\",\"secure\":true,\"httpOnly\":true,\"path\":\"/\"},\"validationToken\":\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImpzYWxvdGlhbHZlc0BnbWFpbC5jb20iLCJwb3NpdGlvbiI6InZldGVyaW5hcmlhbiIsImlhdCI6MTczMTM0NTMyOCwiZXhwIjoxNzMxMzc0MTI4fQ.bl14HTrfzA45QXzkp3v1FcJovnI93NFpKWKz6MWLp6w\"}'),('mo3ED_yZp40_o1BfkE-V8_3FeP6GgZnu',1731432614,'{\"cookie\":{\"originalMaxAge\":86400000,\"expires\":\"2024-11-12T17:30:13.595Z\",\"secure\":false,\"httpOnly\":true,\"path\":\"/\"},\"validationToken\":\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImpzYWxvdGlhbHZlc0BnbWFpbC5jb20iLCJwb3NpdGlvbiI6InZldGVyaW5hcmlhbiIsImlhdCI6MTczMTM0NjIxMywiZXhwIjoxNzMxMzc1MDEzfQ.MLijPvwknnVoikNaWX8qtskL37FApJDQWIZc5e7SO8Y\"}'),('nJt847q7xP9hRTSAsTw9Rk8AiPB3M385',1731432547,'{\"cookie\":{\"originalMaxAge\":86400000,\"expires\":\"2024-11-12T17:29:06.500Z\",\"secure\":false,\"httpOnly\":true,\"path\":\"/\"},\"validationToken\":\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImpzYWxvdGlhbHZlc0BnbWFpbC5jb20iLCJwb3NpdGlvbiI6InZldGVyaW5hcmlhbiIsImlhdCI6MTczMTM0NjE0NiwiZXhwIjoxNzMxMzc0OTQ2fQ.g7ljz8P111L1jDv4tiGCzJkCU6bsySMLfaE-zSiwlWc\"}'),('ouTkMBv6qC-mY5tek2H67iXMuobSj93m',1731431070,'{\"cookie\":{\"originalMaxAge\":86400000,\"expires\":\"2024-11-12T17:04:29.988Z\",\"secure\":true,\"httpOnly\":true,\"path\":\"/\"},\"validationToken\":\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImpzYWxvdGlhbHZlc0BnbWFpbC5jb20iLCJwb3NpdGlvbiI6InZldGVyaW5hcmlhbiIsImlhdCI6MTczMTM0NDY2OSwiZXhwIjoxNzMxMzczNDY5fQ.ubrWuV2vP0nWfDSeaGF8bLz1NueH1e7tZdSLAsg6IGw\"}'),('reGFSaxyox2YRF8qS3mQWqUfrJFdNZjA',1731431241,'{\"cookie\":{\"originalMaxAge\":86400000,\"expires\":\"2024-11-12T17:07:21.475Z\",\"secure\":true,\"httpOnly\":true,\"path\":\"/\"},\"validationToken\":\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImpzYWxvdGlhbHZlc0BnbWFpbC5jb20iLCJwb3NpdGlvbiI6InZldGVyaW5hcmlhbiIsImlhdCI6MTczMTM0NDg0MSwiZXhwIjoxNzMxMzczNjQxfQ.3UEdUsGqsXOBinPLUgP-vpVouxiSezUtYBnIEAu6qjo\"}'),('sCIGjFRBo0BMX2sCHOJyqSFr6MW9YuIr',1731431107,'{\"cookie\":{\"originalMaxAge\":86400000,\"expires\":\"2024-11-12T17:05:07.162Z\",\"secure\":true,\"httpOnly\":true,\"path\":\"/\"},\"validationToken\":\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImpzYWxvdGlhbHZlc0BnbWFpbC5jb20iLCJwb3NpdGlvbiI6InZldGVyaW5hcmlhbiIsImlhdCI6MTczMTM0NDcwNywiZXhwIjoxNzMxMzczNTA3fQ.cLzA69LVzFBON_gHWW1nJWjmaDVv8s0Oug6EXIx9yNI\"}'),('tK9azsVHcOd79fAACJk0WRIurMCvzbk9',1731431295,'{\"cookie\":{\"originalMaxAge\":86400000,\"expires\":\"2024-11-12T17:08:15.419Z\",\"secure\":true,\"httpOnly\":true,\"path\":\"/\"},\"validationToken\":\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImpzYWxvdGlhbHZlc0BnbWFpbC5jb20iLCJwb3NpdGlvbiI6InZldGVyaW5hcmlhbiIsImlhdCI6MTczMTM0NDg5NSwiZXhwIjoxNzMxMzczNjk1fQ.0bO9uwL50VhjFlZgKCRdqPusjJ6SKta3tZ0_ZwqUQAE\"}');
-/*!40000 ALTER TABLE `sessions` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -378,7 +366,7 @@ CREATE TABLE `species` (
   `idSpecies` int NOT NULL AUTO_INCREMENT,
   `nameSpecies` varchar(50) NOT NULL,
   PRIMARY KEY (`idSpecies`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -387,7 +375,6 @@ CREATE TABLE `species` (
 
 LOCK TABLES `species` WRITE;
 /*!40000 ALTER TABLE `species` DISABLE KEYS */;
-INSERT INTO `species` VALUES (1,'GATO');
 /*!40000 ALTER TABLE `species` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -427,7 +414,7 @@ CREATE TABLE `supplementcategories` (
   `idSupplementCategory` int NOT NULL AUTO_INCREMENT,
   `nameSupplementCategory` varchar(50) NOT NULL,
   PRIMARY KEY (`idSupplementCategory`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -436,7 +423,6 @@ CREATE TABLE `supplementcategories` (
 
 LOCK TABLES `supplementcategories` WRITE;
 /*!40000 ALTER TABLE `supplementcategories` DISABLE KEYS */;
-INSERT INTO `supplementcategories` VALUES (1,'MEDICAMENTOS');
 /*!40000 ALTER TABLE `supplementcategories` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -455,8 +441,8 @@ CREATE TABLE `supplementinputs` (
   `Supplements_idSupplement` int NOT NULL,
   PRIMARY KEY (`idSupplementInput`),
   KEY `fk_InuputSupplement_Supplements1_idx` (`Supplements_idSupplement`),
-  CONSTRAINT `fk_InuputSupplement_Supplements1` FOREIGN KEY (`Supplements_idSupplement`) REFERENCES `supplements` (`idSupplement`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb3;
+  CONSTRAINT `fk_InuputSupplement_Supplements1` FOREIGN KEY (`Supplements_idSupplement`) REFERENCES `supplements` (`idSupplement`) ON DELETE RESTRICT ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -465,7 +451,6 @@ CREATE TABLE `supplementinputs` (
 
 LOCK TABLES `supplementinputs` WRITE;
 /*!40000 ALTER TABLE `supplementinputs` DISABLE KEYS */;
-INSERT INTO `supplementinputs` VALUES (2,'',10,'2024-10-09',1),(4,'',10,'2024-10-31',1);
 /*!40000 ALTER TABLE `supplementinputs` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -484,8 +469,8 @@ CREATE TABLE `supplementoutputs` (
   `Supplements_idSupplement` int NOT NULL,
   PRIMARY KEY (`idSupplementOutput`),
   KEY `fk_OutputSupplements_Supplements1_idx` (`Supplements_idSupplement`),
-  CONSTRAINT `fk_OutputSupplements_Supplements1` FOREIGN KEY (`Supplements_idSupplement`) REFERENCES `supplements` (`idSupplement`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb3;
+  CONSTRAINT `fk_OutputSupplements_Supplements1` FOREIGN KEY (`Supplements_idSupplement`) REFERENCES `supplements` (`idSupplement`) ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -494,7 +479,6 @@ CREATE TABLE `supplementoutputs` (
 
 LOCK TABLES `supplementoutputs` WRITE;
 /*!40000 ALTER TABLE `supplementoutputs` DISABLE KEYS */;
-INSERT INTO `supplementoutputs` VALUES (1,'',10,'2024-10-30',1);
 /*!40000 ALTER TABLE `supplementoutputs` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -513,8 +497,8 @@ CREATE TABLE `supplements` (
   `SupplementCategories_idSupplementCategory` int NOT NULL,
   PRIMARY KEY (`idSupplement`),
   KEY `fk_Supplements_SupplementCategories1_idx` (`SupplementCategories_idSupplementCategory`),
-  CONSTRAINT `fk_Supplements_SupplementCategories1` FOREIGN KEY (`SupplementCategories_idSupplementCategory`) REFERENCES `supplementcategories` (`idSupplementCategory`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb3;
+  CONSTRAINT `fk_Supplements_SupplementCategories1` FOREIGN KEY (`SupplementCategories_idSupplementCategory`) REFERENCES `supplementcategories` (`idSupplementCategory`) ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -523,7 +507,6 @@ CREATE TABLE `supplements` (
 
 LOCK TABLES `supplements` WRITE;
 /*!40000 ALTER TABLE `supplements` DISABLE KEYS */;
-INSERT INTO `supplements` VALUES (1,'Antibiotioco',20,'ML',1);
 /*!40000 ALTER TABLE `supplements` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -543,7 +526,7 @@ CREATE TABLE `users` (
   PRIMARY KEY (`idUser`),
   KEY `fk_Users_Addresses1_idx` (`Addresses_idAddress`),
   CONSTRAINT `fk_Users_Addresses1` FOREIGN KEY (`Addresses_idAddress`) REFERENCES `addresses` (`idAddress`) ON DELETE SET NULL ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -552,9 +535,26 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (1,'John Doe','11999998888','johndoe@example.com',NULL),(4,'JOAO VICTOR SALOTI ALVES','019989263759','',13),(5,'JOAO VICTOR SALOTI ALVES','019989263759','jsalotialves@gmail.com',14);
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
+
+--
+-- Final view structure for view `clinicalreportsview`
+--
+
+/*!50001 DROP VIEW IF EXISTS `clinicalreportsview`*/;
+/*!50001 SET @saved_cs_client          = @@character_set_client */;
+/*!50001 SET @saved_cs_results         = @@character_set_results */;
+/*!50001 SET @saved_col_connection     = @@collation_connection */;
+/*!50001 SET character_set_client      = utf8mb4 */;
+/*!50001 SET character_set_results     = utf8mb4 */;
+/*!50001 SET collation_connection      = utf8mb4_0900_ai_ci */;
+/*!50001 CREATE ALGORITHM=UNDEFINED */
+/*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
+/*!50001 VIEW `clinicalreportsview` AS select `cr`.`idClinicalReport` AS `idClinicalReport`,`cr`.`registrationDate` AS `registrationDate`,`cr`.`editionDate` AS `editionDate`,`cr`.`descriptionClinicalReport` AS `descriptionClinicalReport`,`a`.`nameAnimal` AS `nameAnimal`,`e`.`nameEmployee` AS `EmployeeName`,`s`.`nameSpecies` AS `SpeciesName`,`r`.`nameRace` AS `RacesName` from ((((`clinicalreports` `cr` join `animals` `a` on((`cr`.`Animals_idAnimal` = `a`.`idAnimal`))) join `employees` `e` on((`cr`.`Employees_idEmployee` = `e`.`idEmployee`))) join `species` `s` on((`a`.`Species_idSpecies` = `s`.`idSpecies`))) join `races` `r` on((`a`.`Races_idRace` = `r`.`idRace`))) */;
+/*!50001 SET character_set_client      = @saved_cs_client */;
+/*!50001 SET character_set_results     = @saved_cs_results */;
+/*!50001 SET collation_connection      = @saved_col_connection */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -565,4 +565,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-11-18 15:12:15
+-- Dump completed on 2024-11-25 22:46:18

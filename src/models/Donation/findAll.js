@@ -24,7 +24,6 @@ export const findAll = async (nameUser, donationDate) => {
       }).orderBy([{ column: 'donationDate', order: 'desc' }]);
     return { status: true, values: donations };
   } catch (error) {
-    console.log(error)
     return { status: false, error: error };
   }
 }

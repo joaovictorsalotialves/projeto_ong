@@ -1,4 +1,4 @@
-import { findAll } from "../../models/state/findAll.js";
+import { findAll } from "../../models/State/findAll.js";
 
 export const selectStatesController = async (request, response) => {
   let { nameState } = request.query;

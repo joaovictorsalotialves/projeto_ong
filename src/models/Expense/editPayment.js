@@ -2,28 +2,37 @@ import { conn } from "../../data/connection.js";
 import { findById } from "./findById.js";
 
 export const editPayment = async (idExpense, paymentDate) => {
-  let expense = await findById(idExpense);
+  try {
+    let expense = await findById(idExpense);
 
-  let dueDate = new Date(expense.values.dueDate);
-  let nowDate = new Date();
-
-  let statusExpense = paymentDate ? 'Paga' : dueDate > nowDate ? 'Atrasada' : 'Não Paga';
-
-  if (expense.status) {
-    try {
-      await conn.update({
-        paymentDate: paymentDate,
-        statusExpense: statusExpense
-      }).where({ idExpense: idExpense }).table('expenses');
-      return { status: true };
-    } catch (error) {
-      console.log(error)
-      return { status: false, error: error };
+    if (!expense) {
+      return {
+        status: false,
+        message: 'Despesa não encontrada.'
+      };
     }
-  }
 
-  return {
-    status: false,
-    message: 'Bad request: Not found expense'
-  };
+    let dueDate = new Date(expense.values.dueDate);
+    let nowDate = new Date();
+
+    let statusExpense = 'Não Paga';
+    if (paymentDate) {
+      statusExpense = 'Paga';
+    } else if (dueDate < nowDate) {
+      statusExpense = 'Atrasada';
+    }
+
+    await conn.update({
+      paymentDate: paymentDate || null,
+      statusExpense: statusExpense
+    })
+      .where({ idExpense: idExpense })
+      .table('expenses');
+
+    return { status: true };
+
+  } catch (error) {
+    console.error(error);
+    return { status: false, error: 'Erro ao atualizar a despesa.' };
+  }
 }

@@ -11,6 +11,7 @@ export const findAll = async (nameSupplement, nameSupplementCategory, outputDate
         'supplements.idSupplement',
         'supplements.nameSupplement',
         'supplements.typeMensure',
+        'supplementcategories.idSupplementCategory',
         'supplementcategories.nameSupplementCategory',
       ]).from('supplementoutputs')
       .join('supplements', 'supplementOutputs.Supplements_idSupplement', '=', 'supplements.idSupplement')

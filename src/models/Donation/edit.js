@@ -33,7 +33,7 @@ export const edit = async (idDonation, valueDonation, description, donationDate,
         if (resultSupplementInput.status) {
           try {
             await conn.update({
-              valueDonation: valueDonation,
+              valueDonation: valueDonation ? valueDonation : null,
               description: description,
               donationDate: donationDate,
               Users_idUser: idUser ? idUser : null,
@@ -51,7 +51,7 @@ export const edit = async (idDonation, valueDonation, description, donationDate,
 
       try {
         await conn.update({
-          valueDonation: valueDonation,
+          valueDonation: valueDonation ? valueDonation : null,
           description: description,
           donationDate: donationDate,
           Users_idUser: idUser ? idUser : null,

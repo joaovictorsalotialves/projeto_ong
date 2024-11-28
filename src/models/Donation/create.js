@@ -23,7 +23,7 @@ export const create = async (valueDonation, description, donationDate, idUser, i
       if (resultSupplementInput.status) {
         try {
           let idDonation = await conn.insert({
-            valueDonation: valueDonation,
+            valueDonation: valueDonation ? valueDonation : null,
             description: description,
             donationDate: donationDate,
             Users_idUser: idUser ? idUser : null,
@@ -41,7 +41,7 @@ export const create = async (valueDonation, description, donationDate, idUser, i
 
     try {
       let idDonation = await conn.insert({
-        valueDonation: valueDonation,
+        valueDonation: valueDonation ? valueDonation : null,
         description: description,
         donationDate: donationDate,
         Users_idUser: idUser ? idUser : null,
